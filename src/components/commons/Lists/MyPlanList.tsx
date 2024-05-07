@@ -3,6 +3,7 @@ import { IoEyeOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import * as S from './List.style';
 import { useState } from 'react';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
 
 interface PlanListItem {
   tripStartDate: string;
@@ -87,7 +88,13 @@ export const MyPlanList: React.FC<MyPlanListProps> = ({
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <S.MyPlanListWrapper>
+        <S.MyPlanListItemWrapper>
+          <div>{LoadingComponent()}</div>
+        </S.MyPlanListItemWrapper>
+      </S.MyPlanListWrapper>
+    );
   }
 
   if (error) {

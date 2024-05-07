@@ -4,8 +4,8 @@ import { IoClose } from 'react-icons/io5';
 import Button from '../buttons/Button';
 import { InvitationModal } from '../modals/Modal';
 import * as S from './Invitation.style';
-import { useNicknameSearchQuery } from '@/hooks/useQuery';
 import { InvitedPerson } from '@/components/plans/planComponents/PlanDetail';
+import { useNicknameSearchQuery } from '@/hooks/useQuery/useTravelPlanQuery';
 
 interface InvitationProps {
   isOpen: boolean;

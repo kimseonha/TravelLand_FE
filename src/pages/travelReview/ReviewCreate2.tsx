@@ -7,7 +7,6 @@ const ReviewCreate2 = () => {
 
   return (
     <>
-      {/* <ReDesignHeader needSearchInput={true} /> */}
       <div style={{ marginBottom: '150px' }}>
         <S.CenteredContainer2>
           <h2>여행 정보 작성하기</h2>

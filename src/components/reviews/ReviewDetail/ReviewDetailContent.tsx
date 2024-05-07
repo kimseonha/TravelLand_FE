@@ -1,6 +1,6 @@
 // import React from 'react';
 // import { TripDetail } from '@/api/interfaces/reviewInterface';
-import * as S from '@/components/commons/user/ReviewDetail/ReviewDetail.style';
+import * as S from '@/components/reviews/ReviewDetail/ReviewDetail.style';
 
 // interface ReviewContentProps {
 //   tripDetail: TripDetail;

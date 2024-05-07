@@ -1,4 +1,3 @@
-// import ReDesignHeader from '@/components/layouts/Header2';
 import ReviewCreate from '@/components/reviews/reviewIndex/TReviewCreate';
 import { useState } from 'react';
 import * as S from '@/components/reviews/reviewIndex/TReviewPageStyle';
@@ -8,7 +7,6 @@ const ReviewCreate1 = () => {
 
   return (
     <>
-      {/* <ReDesignHeader needSearchInput={true} /> */}
       <S.CenteredContainer>
         <h2>여행 정보 작성하기</h2>
         <S.StepperContainer>

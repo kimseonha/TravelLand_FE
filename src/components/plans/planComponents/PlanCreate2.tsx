@@ -6,9 +6,9 @@ import Button from '@/components/commons/buttons/Button';
 import { useLocation } from 'react-router-dom';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import KaKaoMap from '@/components/maps/KaKaoMap';
-import { useCreatePlanMutaton } from '@/hooks/useMutation';
 import { TfiArrowCircleRight } from 'react-icons/tfi';
 import { TimeSelectBox } from '@/components/commons/timeSelect/TimeSelectBox';
+import { useCreatePlanMutation } from '@/hooks/useMutation/useTravelPlanMutation';
 
 export interface UnitPlan {
   title: string;
@@ -281,7 +281,7 @@ const PlanCreate2: React.FC = () => {
     );
   };
 
-  const createPlanList = useCreatePlanMutaton();
+  const createPlanList = useCreatePlanMutation();
 
   // 등록하기 버튼
   const handlePlanSubmit = () => {

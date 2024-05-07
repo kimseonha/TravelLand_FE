@@ -1,14 +1,15 @@
 import React from 'react';
-import {
-  useGetMainRankListQuery,
-  useGetMainRandomListQuery,
-} from '@/hooks/useQuery';
 import MainCard from '@/components/commons/mainItem/MainCard';
 import ListTitle from '@/components/commons/mainItem/ListTitle';
 import MainList from '@/components/commons/mainItem/MainList';
 import { ButtonContainer, ButtonsWrapper } from '../buttons/Button.style';
 import Maintitle from './MainTitle';
 import { SmallButton } from '../buttons/Button';
+import {
+  useGetMainRankListQuery,
+  useGetMainRandomListQuery,
+} from '@/hooks/useQuery/useMainQuery';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
 
 const MainContent: React.FC = () => {
   // TopTen 데이터 페칭
@@ -27,7 +28,11 @@ const MainContent: React.FC = () => {
 
   // 로딩 상태 확인
   if (isLoadingTopTen || isLoadingRandom) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <div>{LoadingComponent()}</div>
+      </div>
+    );
   }
 
   // 에러 상태 확인

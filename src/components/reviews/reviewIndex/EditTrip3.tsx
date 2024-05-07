@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import ToggleButton from '@/components/commons/buttons/ToggleButton';
 import { ModernInput } from '@/components/commons/inputs/Input';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
-import { useUpdateTripMutation } from '@/hooks/useMutation';
+import { useUpdateTripMutation } from '@/hooks/useMutation/useTravelReviewMutation';
 import * as S from '@/components/reviews/reviewIndex/CreateEditStyle';
 
 const EditTrip3 = () => {

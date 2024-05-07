@@ -1,10 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { instance, instanceWithToken } from './axios';
-import {
-  TripData,
-  TripDetail,
-  TripListParams,
-} from './interfaces/reviewInterface';
+import { TripData, TripListParams } from './interfaces/reviewInterface';
 import { Cookies } from 'react-cookie';
 
 // 여행 정보 등록
@@ -62,7 +58,7 @@ export const updateTrip = async (
 // 여행 정보 상세 보기
 export const getTripDetail = async (
   tripId: number,
-): Promise<AxiosResponse<TripDetail>> => {
+): Promise<AxiosResponse<any>> => {
   const cookie = new Cookies();
   try {
     if (cookie.get('Authorization')) {

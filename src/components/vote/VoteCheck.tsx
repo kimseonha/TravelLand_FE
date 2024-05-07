@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Button from '../commons/buttons/Button';
 import * as S from './Vote.style';
 import { useNavigate } from 'react-router-dom';
-import { useCheckVoteMutation } from '@/hooks/useMutation';
+import { useCheckVoteMutation } from '@/hooks/useMutation/useTravelPlanMutation';
 
 interface PlanVotes {
   planATitle: string;

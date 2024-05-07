@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGetMainSearchQuery } from '@/hooks/useQuery/useMainQuery';
 import SearchModal from '../Search/SearchPageModal';
-import { useGetMainSearchQuery } from '@/hooks/useQuery';
 import PopupModal from '@/components/commons/modals/PopupModal';
 import MainContent from '@/components/commons/mainItem/MainContent';
 

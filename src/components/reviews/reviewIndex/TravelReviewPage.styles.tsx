@@ -315,7 +315,12 @@ export const BackBox = styled.div`
 // ReviewPage 스타일
 
 // 로딩 상태
-export const LoadingContainer = styled.div``;
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+`;
 
 // 에러 상태
 export const ErrorContainer = styled.div``;

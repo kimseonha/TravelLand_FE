@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import * as S from '../Plan.style';
 import Map from '@/components/maps/Map';
-import { usePlanDetailQuery } from '@/hooks/useQuery';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '@/components/commons/buttons/Button';
+import { FaLocationDot } from 'react-icons/fa6';
+import { Invitation } from '@/components/commons/invitation/Invitation';
+import { VoteCheck } from '@/components/vote/VoteCheck';
+import { useAuthStore } from '@/store/useAuthStore';
 import {
   useCancelLikePlanMutation,
   useCancelScrapPlanMutation,
   useCreateLikePlanMutation,
   useCreateScrapPlanMutation,
   useDeleteMutation,
-} from '@/hooks/useMutation';
-import InvitationCard from '@/components/commons/cards/InvitationCard';
-import { FaLocationDot } from 'react-icons/fa6';
+} from '@/hooks/useMutation/useTravelPlanMutation';
+import { usePlanDetailQuery } from '@/hooks/useQuery/useTravelPlanQuery';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
 import { CiCirclePlus } from 'react-icons/ci';
-import { Invitation } from '@/components/commons/invitation/Invitation';
-import { VoteCheck } from '@/components/vote/VoteCheck';
-import { useAuthStore } from '@/store/useAuthStore';
-// 사용할 데이터 타입 정의 (예시입니다, 실제 데이터에 맞게 조정해야 합니다.)
+import InvitationCard from '@/components/commons/cards/InvitationCard';
 
 interface ButtonProps {
   active: boolean;
@@ -171,7 +171,7 @@ const PlanDetail: React.FC<ButtonProps> = () => {
 
   if (isLoading) {
     // 데이터 로딩 중 UI
-    return <div>Loading...</div>;
+    return <div>{LoadingComponent()}</div>;
   }
 
   if (isError) {

@@ -6,7 +6,7 @@ import {
   WholePlan,
 } from './interfaces/planInterface';
 import { Cookies } from 'react-cookie';
-import { PlanResponse } from '@/hooks/useMutation';
+import { PlanResponse } from '@/hooks/useMutation/useTravelPlanMutation';
 
 // 여행 플랜 작성하기
 export const createPlanList = async (wholePlan: WholePlan) => {

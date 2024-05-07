@@ -1,15 +1,15 @@
-import Modal from '@/components/commons/modals/Modal';
-import { useUpdateNickname } from '@/hooks/useMutation';
-import { useGetUerInfoQuery } from '@/hooks/useQuery';
+// import { NicknameModal } from '@/components/commons/modals/Modal';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
+import { useGetUerInfoQuery } from '@/hooks/useQuery/useUserQuery';
 import * as S from '@components/commons/user/myPage/MyPage.style';
 import { useState } from 'react';
 import styled from 'styled-components';
-import CloseIcon from '@/icons/closeBtn.svg';
 import { IoClose } from 'react-icons/io5';
+import { useUpdateNickname } from '@/hooks/useMutation/useUserMutation';
+import Modal from '@/components/commons/modals/Modal';
 
 const MyPageUserInfo = () => {
-  // return <></>;
-  const { data, isLoading, isError } = useGetUerInfoQuery();
+  const { data, isLoading, isError, refetch } = useGetUerInfoQuery();
   const [modalOpen, setModalOpen] = useState(false);
   const [newNickname, setNewNickname] = useState('');
   const { mutate: updateNickname } = useUpdateNickname();
@@ -28,6 +28,7 @@ const MyPageUserInfo = () => {
       onSuccess: () => {
         alert('닉네임이 변경되었습니다.');
         setModalOpen(false); // 모달 닫기
+        refetch();
       },
       onError: (error) => {
         alert(`닉네임 변경에 실패했습니다: ${error.message}`);
@@ -46,7 +47,12 @@ const MyPageUserInfo = () => {
   };
 
   const userData = data?.data;
-  if (isLoading) return <div>Data is Loading</div>;
+  if (isLoading)
+    return (
+      <div>
+        <div>{LoadingComponent()}</div>
+      </div>
+    );
   if (isError) return <div>Error occurred during fetching</div>;
   return (
     <>

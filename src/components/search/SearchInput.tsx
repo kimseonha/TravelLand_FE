@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@/icons/search2.svg';
 import { useNavigate } from 'react-router-dom';
-import { useGetMainSearchQuery } from '@/hooks/useQuery';
+import { useGetMainSearchQuery } from '@/hooks/useQuery/useMainQuery';
 
 export interface SearchInputProps {
   placeholder?: string;

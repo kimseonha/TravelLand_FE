@@ -2,16 +2,14 @@ import { useState } from 'react';
 import Button from '@/components/commons/buttons/Button';
 import ListCard from '@/components/commons/mainItem/ListCard';
 import * as S from '@/components/commons/user/myPage/MyPage.style';
-import {
-  useGetUerInfoQuery,
-  useMypageScrapTrip,
-  useMypageTrip,
-} from '@/hooks/useQuery';
 import { TravelReviewCardSection } from '@/components/reviews/reviewIndex/TravelReviewPage.styles';
-// import { useMyTripListQuery } from '@/hooks/useQuery';
-// import { useState } from 'react';
-// import { getMyTripList } from '@/api/userAxios';
 import { useNavigate } from 'react-router-dom';
+import {
+  useMypageTrip,
+  useMypageScrapTrip,
+  useGetUerInfoQuery,
+} from '@/hooks/useQuery/useUserQuery';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
 
 export interface Trip {
   tripId: number;
@@ -43,6 +41,21 @@ const MyPageReviewList = () => {
 
   const userData = count?.data;
 
+  const renderTripTotalElements = () => {
+    if (userData?.tripTotalElements === 0) {
+      return 0;
+    } else {
+      return userData?.tripTotalElements || 0;
+    }
+  };
+
+  const renderScrapTotalElements = () => {
+    if (userData?.scrapTotalElements === 0) {
+      return 0;
+    } else {
+      return userData?.scrapTotalElements || 0;
+    }
+  };
   const handleCardClick = (tripId?: number) => {
     navigate(`/travelDetail/${tripId}`);
   };
@@ -59,18 +72,12 @@ const MyPageReviewList = () => {
     setShowScrapList(true);
   };
 
-  // const [page, _] = useState(1); // 페이지 번호
-  // const [size] = useState(10); // 한 페이지 당 받아올 겟수
-  // const [sortBy] = useState('createdAt');
-  // const [isAsc] = useState(true);
-
-  // 페이지네이션을 위한 파라미터 설정
-  // const tripListParams = { page, size, isAsc, sortBy };
-
-  // const { data, isError, isLoading } = useMyTripListQuery(tripListParams);
-  // console.log(data);
-
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <div>{LoadingComponent()}</div>
+      </div>
+    );
   if (isError) return <div>Error: {error.message}</div>;
 
   return (
@@ -85,7 +92,7 @@ const MyPageReviewList = () => {
             marginRight="5px"
             onClick={handleMyReviewListClick}
           >
-            내가 작성한 {userData.tripTotalElements || 0}
+            내가 작성한 {renderTripTotalElements()}
           </Button>
           <Button
             color="white"
@@ -94,7 +101,7 @@ const MyPageReviewList = () => {
             borderColor="gray"
             onClick={handleMyScrapListClick}
           >
-            내가 스크랩한 {userData.scrapTotalElements || 0}
+            내가 스크랩한 {renderScrapTotalElements()}
           </Button>
         </div>
         <div>

@@ -3,8 +3,7 @@ import { CreateVoteModal } from '../commons/modals/Modal';
 import Button from '@/components/commons/buttons/Button';
 import { ModernInput } from '../commons/inputs/Input';
 import { SetStateAction, useState } from 'react';
-import { useCreateVoteMutation } from '@/hooks/useMutation';
-
+import { useCreateVoteMutation } from '@/hooks/useMutation/useUserMutation';
 interface CreateVoteModalProps {
   isOpen: boolean;
   onClose: () => void;

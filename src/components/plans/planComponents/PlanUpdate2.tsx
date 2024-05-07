@@ -9,7 +9,7 @@ import KaKaoMap from '@/components/maps/KaKaoMap';
 // import { useCreatePlanMutaton } from '@/hooks/useMutation';
 import { TfiArrowCircleRight } from 'react-icons/tfi';
 import { TimeSelectBox } from '@/components/commons/timeSelect/TimeSelectBox';
-import { useUpdatePlanMutation } from '@/hooks/useMutation';
+import { useUpdatePlanMutation } from '@/hooks/useMutation/useTravelPlanMutation';
 
 export interface UnitPlan {
   placeName?: string;

@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import * as S from './Search.style';
 import styled from 'styled-components';
 import CategoryButton from '../commons/buttons/CategoryButton';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   useGetSearchResultAreaQuery,
   useGetSearchResultHashtagQuery,
-} from '@/hooks/useQuery';
-import { useLocation, useNavigate } from 'react-router-dom';
+} from '@/hooks/useQuery/useMainQuery';
+import { LoadingComponent } from '../layouts/LoadingComponent';
 // import { IoLocationSharp } from 'react-icons/io5';
 
 // interface IPlaceNameProps {
@@ -84,7 +85,12 @@ const ResultsContent: React.FC = () => {
     setSearchResults(results);
   }, [areaResults, hashtagResults, location.state]);
 
-  if (areaLoading || hashtagLoading) return <div>Loading...</div>;
+  if (areaLoading || hashtagLoading)
+    return (
+      <div>
+        <div>{LoadingComponent()}</div>
+      </div>
+    );
   if (areaError || hashtagError) return <div>Error loading data</div>;
 
   return (

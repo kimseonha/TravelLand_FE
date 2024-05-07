@@ -1,76 +1,69 @@
 import { useState, useEffect } from 'react';
-import * as S from '@/components/commons/user/ReviewDetail/ReviewDetail.style';
-import { TripDetail } from '@/api/interfaces/reviewInterface';
-import Button from '../../buttons/Button';
+import * as S from '@/components/reviews/ReviewDetail/ReviewDetail.style';
+import Button from '../../commons/buttons/Button';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { deleteTrip } from '@/api/reviewAxios';
 import { AxiosError } from 'axios';
-import CategoryButton from '../../buttons/CategoryButton';
-import { HashTagContainer } from '../../mainItem/MainCard.style';
-import {
-  useCancelLikeTripMutation,
-  useCancelScrapTripMutation,
-  useCreateLikeTripMutation,
-  useCreateScrapTripMutation,
-} from '@/hooks/useMutation';
+import CategoryButton from '../../commons/buttons/CategoryButton';
+import { HashTagContainer } from '../../commons/mainItem/MainCard.style';
+import { useParams } from 'react-router-dom';
 import { useAuthStore } from '@/store/useAuthStore';
-import Modal from '../../modals/Modal';
+import Modal from '../../commons/modals/Modal';
+import {
+  useCreateLikeTripMutation,
+  useCancelLikeTripMutation,
+  useCreateScrapTripMutation,
+  useCancelScrapTripMutation,
+} from '@/hooks/useMutation/useTravelReviewMutation';
+import { useTripDetailQuery } from '@/hooks/useQuery/useTravelReviewQuery';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
 
-interface ReviewDetailListProps {
-  tripDetail: TripDetail;
-  hashtagList?: string[];
-}
-
-const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
-  // const [activeButton, setActiveButton] = useState<ActiveButtonState>(null);
+const ReviewDetailList = () => {
   const navigate = useNavigate();
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const [activeIndex, setActiveIndex] = useState(0);
   const [likeActive, setLikeActive] = useState(false);
   const [scrapActive, setScrapActive] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // 삭제 확인 모달 상태
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const handleEditClick = () => {
-    // tripDetail은 현재 페이지에서 사용 중인 여행 리뷰의 상세 정보입니다.
-    navigate('/editTrip', {
-      state: { formData: tripDetail, tripId: tripDetail.tripId },
-    });
-  };
+  const { tripId } = useParams<{ tripId: string }>();
+  const id = Number(tripId);
 
-  // tripDetail로부터 초기 like 및 scrap 상태를 설정
+  const { data, isLoading, isError } = useTripDetailQuery(id);
+
+  const tripDetail = data?.data;
+
   useEffect(() => {
-    setLikeActive(tripDetail.isLike);
-    setScrapActive(tripDetail.isScrap);
-  }, [tripDetail, tripDetail.isLike, tripDetail.isScrap]);
+    if (tripDetail) {
+      setLikeActive(tripDetail.isLike);
+      setScrapActive(tripDetail.isScrap);
+    }
+  }, [tripDetail]);
 
   const likeTrip = useCreateLikeTripMutation();
   const disLikeTrip = useCancelLikeTripMutation();
-
   const scrapTrip = useCreateScrapTripMutation();
   const scrapCancel = useCancelScrapTripMutation();
-  console.log(isLoggedIn);
-  // 좋아요 기능
+
   const toggleLike = (tripId: number) => {
     if (!isLoggedIn) {
       alert('로그인이 필요합니다.');
       return;
-    } else {
-      const action = likeActive ? disLikeTrip.mutate : likeTrip.mutate;
-      action(tripId);
-      setLikeActive(!likeActive);
     }
+    const action = likeActive ? disLikeTrip.mutate : likeTrip.mutate;
+    action(tripId);
+    setLikeActive(!likeActive);
   };
 
   const toggleScrap = (tripId: number) => {
     if (!isLoggedIn) {
       alert('로그인이 필요합니다.');
       return;
-    } else {
-      const action = scrapActive ? scrapCancel.mutate : scrapTrip.mutate;
-      action(tripId);
-      setScrapActive(!scrapActive);
     }
+    const action = scrapActive ? scrapCancel.mutate : scrapTrip.mutate;
+    action(tripId);
+    setScrapActive(!scrapActive);
   };
 
   // 예산 cost
@@ -86,7 +79,6 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
     return numberWithCommas + '원';
   };
 
-  // 여행 정보 -> 삭제하기
   const deleteReviewMutation = useMutation({
     mutationFn: (tripId: number) => deleteTrip(tripId),
     onSuccess: () => {
@@ -100,12 +92,14 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
     },
   });
 
-  const handleOpenDeleteModal = () => {
-    setIsDeleteModalOpen(true);
-  };
+  const handleOpenDeleteModal = () => setIsDeleteModalOpen(true);
+  const handleCloseDeleteModal = () => setIsDeleteModalOpen(false);
 
-  const handleCloseDeleteModal = () => {
-    setIsDeleteModalOpen(false);
+  const handleEditClick = () => {
+    // tripDetail은 현재 페이지에서 사용 중인 여행 리뷰의 상세 정보입니다.
+    navigate('/editTrip', {
+      state: { formData: tripDetail, tripId: tripDetail.tripId },
+    });
   };
 
   const handleConfirmDelete = (tripId: number) => {
@@ -113,13 +107,16 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
     handleCloseDeleteModal();
   };
 
+  if (isLoading) return <div>{LoadingComponent()}</div>;
+  if (isError) return <div>Error occurred</div>;
+  if (!tripDetail) return <div>No data</div>;
+
   return (
     <>
-      {/* <ReDesignHeader needSearchInput={true} /> */}
       <S.Container>
         <S.ImageBox>
           {tripDetail.imageUrlList &&
-            tripDetail.imageUrlList.map((url, index) => (
+            tripDetail.imageUrlList.map((url: string, index: number) => (
               <img
                 key={index}
                 src={url}
@@ -133,7 +130,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
             ))}
           <S.SliderDots key={tripDetail.imageUrlList.length}>
             {tripDetail.imageUrlList &&
-              tripDetail.imageUrlList.map((_, index) => (
+              tripDetail.imageUrlList.map((_: any, index: number) => (
                 <S.Dot
                   key={index}
                   active={index === activeIndex}
@@ -227,7 +224,7 @@ const ReviewDetailList = ({ tripDetail }: ReviewDetailListProps) => {
           <S.ContentDiv>{tripDetail.content}</S.ContentDiv>
           <HashTagContainer>
             {tripDetail.hashtagList && tripDetail.hashtagList.length > 0 ? (
-              tripDetail.hashtagList.map((category, idx) => (
+              tripDetail.hashtagList.map((category: string, idx: number) => (
                 <CategoryButton key={idx} title={category} hoverColor="none" />
               ))
             ) : (

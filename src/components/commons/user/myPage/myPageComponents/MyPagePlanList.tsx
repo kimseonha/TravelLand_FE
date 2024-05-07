@@ -3,10 +3,11 @@ import * as S from '@/components/commons/user/myPage/MyPage.style';
 import * as CS from '@/styles/commonStyles';
 import * as LS from '@/components/commons/Lists/List.style';
 import { MyPlanList } from '@/components/commons/Lists/MyPlanList';
-import { useMyPlanListQuery } from '@/hooks/useQuery';
+
 import Button from '@/components/commons/buttons/Button';
 import { useNavigate } from 'react-router-dom';
 import VoteCreate from '@/components/vote/VoteCreate';
+import { useMyPlanListQuery } from '@/hooks/useQuery/useUserQuery';
 
 const MyPagePlanList = () => {
   const navigate = useNavigate();

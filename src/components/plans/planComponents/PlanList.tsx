@@ -4,7 +4,8 @@ import * as S from '@/components/plans/Plan.style';
 // import * as LS from '@components/commons/Lists/List.style';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { usePlanListQuery } from '@/hooks/useQuery';
+import { usePlanListQuery } from '@/hooks/useQuery/useTravelPlanQuery';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
 
 const PlanList = () => {
   const navigate = useNavigate();
@@ -53,7 +54,10 @@ const PlanList = () => {
   // 현재 입력 값 public이 true 저장 불가한 상태로 false로 임시 목록 보여주기
   const filteredData = content?.filter((item: any) => item.isPublic === true); // public 속성이 true인 항목만 필터링
 
-  if (isLoading) return <div>Data is Loading</div>;
+  if (isLoading) {
+    return <div>{LoadingComponent()}</div>;
+  }
+
   if (isError) return <div>Error occurred during fetching</div>;
 
   return (

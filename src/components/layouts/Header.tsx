@@ -124,19 +124,23 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
   // mypage 이동
   const handleOpenMypage = () => {
     navigate('/user/myPage');
+    closeModal();
   };
   // 플랜 작성하기 이동
   const handleOpenPlanCreate = () => {
     navigate('/planCreate/1');
+    closeModal();
   };
   // 여행 정보 작성하기 이동
   const handleOpenTripCreate = () => {
     navigate('/travelCreate');
+    closeModal();
   };
 
   // 로그인 모달 열기
   const handleOpenLogin = () => {
     setIsModalOpen(true); // 로그인 모달 상태를 true로 변경
+    setIsMenuModalOpen((prevState) => !prevState);
   };
   // 로그아웃 처리
   const handleLogoutClick = () => {
@@ -147,10 +151,12 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
         cookie.remove('Authorization', { path: '/' });
         alert('로그아웃 되었습니다!');
         navigate('/'); // 홈으로 이동
+        setIsMenuModalOpen((prevState) => !prevState);
       })
       .catch((error: any) => {
         console.error('Logout failed:', error);
         alert('로그아웃에 실패했습니다.');
+        closeModal();
       });
   };
 
@@ -163,6 +169,7 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
   // 로고 클릭 시 메인 페이지 이동
   const handleMainPage = () => {
     navigate('/');
+    closeModal();
   };
 
   // 모달 토글 함수
@@ -176,21 +183,25 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
   // 투표 모달을 여는 함수
   const handleOpenVoteModal = () => {
     setIsVoteModalOpen(true);
+    closeModal();
   };
 
   // 투표 모달을 닫는 함수
   const handleCloseVoteModal = () => {
     setIsVoteModalOpen(false);
+    closeModal();
   };
 
   // 초대 수락 함수
   const handleAcceptClick = () => {
     alert('현재 개발 중입니다!');
+    closeModal();
   };
 
   // 초대 거절 함수
   const handleDenyClick = () => {
     alert('현재 개발 중입니다!');
+    closeModal();
   };
 
   // 스크롤에 따라 상태 변경
@@ -198,21 +209,26 @@ const ReDesignHeader: React.FC<HeaderProps> = ({
     const handleScroll = () => {
       const shouldBeScrolled = window.scrollY > 50;
       setIsScrolled(shouldBeScrolled);
+      closeModal();
     };
 
     window.addEventListener('scroll', handleScroll);
+    closeModal();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      closeModal();
     };
   }, []);
 
   const handleMakePlanClick = () => {
     navigate('/planList');
+    closeModal();
   };
 
   const handleReviewPageClick = () => {
     navigate('/travelReview');
+    closeModal();
   };
 
   // 로그인 상태에 따라 보여지는 컨텐츠가 달라지도록 조건부 렌더링 처리

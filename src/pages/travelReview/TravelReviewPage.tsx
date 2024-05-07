@@ -6,6 +6,7 @@ import { getTripList } from '@/api/reviewAxios';
 import ListCard from '@/components/commons/mainItem/ListCard';
 import CategoryButton from '@/components/commons/buttons/CategoryButton';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { LoadingComponent } from '@/components/layouts/LoadingComponent';
 
 export interface Trip {
   tripId: number;
@@ -71,7 +72,15 @@ const TravelReviewPage = () => {
     navigate('/results', { state: { area } });
   };
 
-  if (isLoading) return <S.LoadingContainer>Loading...</S.LoadingContainer>;
+  if (isLoading)
+    return (
+      <S.LoadingContainer>
+        {' '}
+        <div>
+          <div>{LoadingComponent()}</div>
+        </div>
+      </S.LoadingContainer>
+    );
   if (error) return <S.ErrorContainer>Error</S.ErrorContainer>;
 
   return (

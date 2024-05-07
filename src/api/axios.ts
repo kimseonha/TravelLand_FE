@@ -14,7 +14,6 @@ export const instanceWithToken = axios.create({
   headers: {
     'content-type': 'application/json',
     accept: 'application/json',
-    // Authorization: cookies.get('Authorization'),
   },
 });
 
